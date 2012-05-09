@@ -1,6 +1,6 @@
 #!/bin/bash
 
 FILES=" .xxxterm.conf .vimrc .vim/[ab]*"
-RSYNC="rsync -urlptRC --exclude='.*.sw?' --exclude='.*.lock' --exclude='*.local'"
+RSYNC="rsync -urlptRC "
 
-rsync $FILES $HOME
+$RSYNC $FILES $HOME

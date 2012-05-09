@@ -1,0 +1,5 @@
+#!/bin/bash
+
+FILES=" .xxxterm.conf "
+
+rsync $FILES $HOME

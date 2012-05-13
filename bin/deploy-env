@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILES=" .xxxterm.conf .vimrc .vim/[acb]*"
+FILES=" .Xresources .xxxterm.conf .vimrc .vim/[acb]*"
 RSYNC="rsync -urlptRC "
 
 $RSYNC $FILES $HOME

@@ -1,0 +1,15 @@
+URxvt*termName:screen-256color
+URxvt.urlLauncher: /usr/local/bin/urxvt
+URxvt.font: xft:terminus:size=9
+! URxvt.background: Black
+URxvt.background: #1F1F1F
+URxvt.foreground: #AAAAAA
+URxvt.scrollBar: off
+URxvt*color4: #1E90FF
+URxvt*color12: #4682B4
+URxvt*color7: #CCCCCC
+URxvt*keysym.C-F8: command:\033]710;TERMINUS14,FIXED-normal--13-*-*-*-c-80-UTFENC\007
+URxvt.perl-ext:
+URxvt.perl-ext-common:
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End: \033[4~

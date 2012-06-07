@@ -1,6 +1,8 @@
 #!/bin/bash
 
 FILES=" .Xresources .tmux.conf .xxxterm.conf .vimrc .vim/[acb]*"
+FILES+=" .pylintrc"
+
 RSYNC="rsync -urlptRC "
 
 $RSYNC $FILES $HOME

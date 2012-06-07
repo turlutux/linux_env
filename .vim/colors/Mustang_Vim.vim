@@ -14,8 +14,8 @@ let colors_name = "mustang"
 
 " Vim >= 7.0 specific colors
 if version >= 700
-  hi CursorLine guibg=#2d2d2d ctermbg=233
-  hi CursorColumn guibg=#2d2d2d ctermbg=233
+  hi CursorLine guibg=#2d2d2d term=none cterm=none ctermbg=0
+  hi CursorColumn guibg=#2d2d2d term=none cterm=none ctermbg=0
   hi MatchParen guifg=#d0ffc0 guibg=#2f2f2f gui=bold ctermfg=157 ctermbg=237 cterm=bold
   hi Pmenu 		guifg=#ffffff guibg=#444444 ctermfg=255 ctermbg=238
   hi PmenuSel 	guifg=#000000 guibg=#b1d631 ctermfg=0 ctermbg=148
@@ -60,8 +60,3 @@ hi DiffChange	ctermfg=NONE	ctermbg=52	cterm=NONE
 hi DiffDelete	ctermfg=22	ctermbg=235	cterm=NONE
 hi DiffText		ctermfg=16	ctermbg=124	cterm=NONE
 
-
-" guide-line plugin
-let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd  guibg=#000033 ctermbg=17
-hi IndentGuidesEven guibg=#000066 ctermbg=18

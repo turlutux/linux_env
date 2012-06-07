@@ -20,6 +20,7 @@ if v:version > 702 && !&relativenumber
 endif
 setlocal nowrap
 setlocal textwidth=79
+setlocal cursorline
 
 " }}}
 

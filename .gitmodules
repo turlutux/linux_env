@@ -19,3 +19,9 @@
 [submodule ".vim/bundle/syntastic"]
 	path = .vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic
+[submodule ".vim/bundle/rb-vim"]
+	path = .vim/bundle/rb-vim
+	url = https://github.com/turlutux/rb-vim
+[submodule ".vim/bundle/buffer-explorer"]
+	path = .vim/bundle/buffer-explorer
+	url = https://github.com/widox/vim-buffer-explorer-plugin

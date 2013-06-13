@@ -1,0 +1,45 @@
+#!/bin/bash
+
+LOGFILE=
+OPTIONS=" -v time "
+
+while getopts ":cdf:" optname
+ do
+   case "$optname" in
+     "c")
+       # echo "Option $optname is specified"
+       adb logcat -c
+       exit 0
+       ;;
+     "d")
+       OPTIONS=$OPTIONS" -d "
+       echo option $OPTIONS
+       ;;
+     "f")
+       # echo "Option $optname has value $OPTARG"
+       LOGFILE=$OPTARG
+       ;;
+     "?")
+       # echo "Unknown option $OPTARG"
+       ;;
+     ":")
+       # echo "No argument value for option $OPTARG"
+       ;;
+     *)
+     # Should not occur
+       echo "Unknown error while processing options"
+       ;;
+   esac
+ done
+
+arglist=${@:$OPTIND}
+
+echo ------------------
+echo arglist= $arglist
+echo ------------------
+
+if [ -n "$LOGFILE" ]; then
+    adb logcat $OPTIONS $arglist | tee $LOGFILE | logcat-colorize
+else
+    adb logcat $OPTIONS $arglist | logcat-colorize
+fi

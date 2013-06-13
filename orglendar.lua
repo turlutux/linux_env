@@ -21,15 +21,17 @@ local print = print
 module("orglendar")
 
 files = {}
-char_width = 7.3
+char_width_9 = 7.3
+char_width_8 = 6.3
 text_color = "#dddddd"
 today_color = "#30d121"
-event_color = "#003580"
+event_color = "#5EA9DB"
 today_event_color = "#ff0000"
 -- text_color = "#FFFFFF"
 -- today_color = "#00FF00"
 -- event_color = "#FF0000"
-font = 'monospace 9'
+cal_font = 'monospace 9'
+todo_font = 'monospace 8'
 parse_on_show = true
 calendar_width = 21
 limit_todo_length = nil
@@ -59,32 +61,51 @@ function parse_agenda()
          print("W: orglendar: cannot find " .. file)
       else
          for line in fd:lines() do
-            local scheduled = string.find(line, "@d%(")
-
-            if scheduled then
-               local _, _, y, m, d  = string.find(line, "@d%((%d%d%d%d)%-(%d%d)%-(%d%d)")
-               local task_date = y .. "-"  .. m .. "-" .. d
-
-               if task_project == nil then
-                   task_project = "None"
-               end
-               if d and (task_date >= today) then
-                  local _, _, task_name = string.find(line, "%s+%-(.-)[@$]")
-
-                  if task_name == nil then
-                      task_name = "Go fuck yourself"
-                  end
-                  local len = string.len(task_name) + string.len(task_project)
-                  if (len > data.maxlen) and (task_date >= today) then
-                     data.maxlen = len
-                  end
-                  table.insert(data.tasks, { name = task_name,
-                                             tags = task_project,
-                                             date = task_date})
-                  data.dates[y .. tonumber(m) .. tonumber(d)] = true
-               end
+            if string.find(line, "^(%a+):") then
+               _, _, task_project = string.find(line, "^(%a+):")
             else
-               _, _, task_project = string.find(line, "(.*):")
+               if not string.find(line, "@done") then
+                  if string.find(line, "@d%(") then
+                     local _, _, y, m, d  = string.find(line, "@d%((%d%d%d%d)%-(%d%d)%-(%d%d)")
+                     local task_date = y .. "-"  .. m .. "-" .. d
+
+                     if task_project == nil then
+                         task_project = "None"
+                     end
+                     if d and (task_date >= today) then
+                        local _, _, task_name = string.find(line, "%s+%-(.-)[@$]")
+
+                        if task_name == nil then
+                            task_name = "Go fuck yourself"
+                        end
+                        local len = string.len(task_name) + string.len(task_project)
+                        if (len > data.maxlen) and (task_date >= today) then
+                           data.maxlen = len
+                        end
+                        table.insert(data.tasks, { name = task_name,
+                                                   tags = task_project,
+                                                   date = task_date})
+                        data.dates[y .. tonumber(m) .. tonumber(d)] = true
+                     end
+                  end
+                  if string.find(line, "@today") then
+                     if task_project == nil then
+                         task_project = "None"
+                     end
+                     local _, _, task_name = string.find(line, "%s+%-(.-)[@$]")
+                     if task_name == nil then
+                         task_name = "Go fuck yourself"
+                     end
+                     local len = string.len(task_name) + string.len(task_project)
+                     if (len > data.maxlen) then
+                         data.maxlen = len
+                     end
+                     table.insert(data.tasks, { name = task_name,
+                                                tags = task_project,
+                                                date = today})
+                     data.dates[os.date("%Y%m%d")] = true
+                end
+              end
             end
          end
       end
@@ -152,7 +173,7 @@ local function create_calendar()
       header = os.date("%B %Y", first_day)
    end
    return header, string.format('<span font="%s" foreground="%s">%s</span>',
-                                font, text_color, result)
+                                cal_font, text_color, result)
 end
 
 function add_calendar()
@@ -203,7 +224,7 @@ local function create_todo()
       result = " "
    end
    return string.format('<span font="%s" foreground="%s">%s</span>',
-                        font, text_color, result), data.maxlen + 3
+                        todo_font, text_color, result), data.maxlen + 3
 end
 
 function get_calendar_and_todo_text(_offset)
@@ -214,7 +235,7 @@ function get_calendar_and_todo_text(_offset)
    offset = _offset
    local header, cal = create_calendar()
    return string.format('<span font="%s" foreground="%s">%s</span>\n%s',
-                        font, text_color, header, cal), create_todo()
+                        cal_font, text_color, header, cal), create_todo()
 end
 
 local function calculate_char_width()
@@ -245,18 +266,17 @@ function show(inc_offset)
    hide()
    offset = save_offset + inc_offset
 
-   local char_width = char_width or calculate_char_width()
    local header, cal_text = create_calendar()
    calendar = naughty.notify({ title = header,
                                text = cal_text,
                                timeout = 0, hover_timeout = 0.5,
-                               width = calendar_width * char_width,
+                               width = calendar_width * char_width_9,
                                position = "bottom_right",
                             })
    todo = naughty.notify({ title = "TO-DO list",
                            text = create_todo(),
                            timeout = 0, hover_timeout = 0.5,
-                           width = (data.maxlen + 3) * char_width,
+                           width = (data.maxlen + 3) * char_width_8,
                            position = "bottom_right",
                         })
 end

@@ -51,4 +51,4 @@ echo -----------------------------
 echo adb logcat $OPTIONS $logOpt $LOGFILE $grepOpt \| logcat-colorize
 echo -----------------------------
 
-#adb logcat $OPTIONS $logOpt $LOGFILE $grepOpt # \| logcat-colorize
+eval "$(echo adb logcat $OPTIONS $logOpt $LOGFILE $grepOpt \| logcat-colorize)"

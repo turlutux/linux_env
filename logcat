@@ -17,7 +17,7 @@ while getopts ":cdf:" optname
        ;;
      "f")
        # echo "Option $optname has value $OPTARG"
-       LOGFILE=$OPTARG
+       LOGFILE=" | tee "$OPTARG
        ;;
      "?")
        # echo "Unknown option $OPTARG"
@@ -34,12 +34,21 @@ while getopts ":cdf:" optname
 
 arglist=${@:$OPTIND}
 
-echo ------------------
-echo arglist= $arglist
-echo ------------------
+for arg in $arglist
+    do
+        if [[ "$arg" == *":"* ]]; then 
+            logOpt+=$arg" "
+        else
+            grepOpt+=" "$arg
+        fi
+    done
 
-if [ -n "$LOGFILE" ]; then
-    adb logcat $OPTIONS $arglist | tee $LOGFILE | logcat-colorize
-else
-    adb logcat $OPTIONS $arglist | logcat-colorize
+if [ -n "$grepOpt" ]; then
+    grepOpt=" | egrep -i '("$(echo $grepOpt | tr ' ' \|)")'"
 fi
+
+echo -----------------------------
+echo adb logcat $OPTIONS $logOpt $LOGFILE $grepOpt \| logcat-colorize
+echo -----------------------------
+
+#adb logcat $OPTIONS $logOpt $LOGFILE $grepOpt # \| logcat-colorize

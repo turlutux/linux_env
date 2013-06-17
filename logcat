@@ -3,7 +3,7 @@
 LOGFILE=
 OPTIONS=" -v time "
 
-while getopts ":cdf:" optname
+while getopts ":csdf:" optname
  do
    case "$optname" in
      "c")
@@ -14,6 +14,9 @@ while getopts ":cdf:" optname
      "d")
        OPTIONS=$OPTIONS" -d "
        echo option $OPTIONS
+       ;;
+     "s")
+       OPTIONS=$OPTIONS" -s "
        ;;
      "f")
        # echo "Option $optname has value $OPTARG"

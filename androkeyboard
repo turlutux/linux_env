@@ -210,3 +210,5 @@ else:
             print "send %s" % keymap_command[sys.argv[i]]
         except KeyError:
             print "command %s not mapped" % sys.argv[i]
+
+    interactive_mode()

@@ -5,6 +5,7 @@
 # exit codes: 0 - normal, 1 - abort, 2 - no menu items, 3 - too many items
 # to select item, press enter; to abort press q
 
+function int_menu {
 [[ $# -lt 1 ]] && exit 2 # no menu items, at least 1 required
 
 [[ $# -gt $(( `tput lines` - 1 )) ]] && exit 3 # more items than rows
@@ -23,66 +24,66 @@ tn="$#" # total number of items
 
 { # capture stdout to stderr
 
-tput civis # hide cursor
+	tput civis # hide cursor
 
-cp=1 # current position
+	cp=1 # current position
 
-end=false
+	end=false
 
-while ! $end
-do
+	while ! $end
+	do
 
-   for i in `seq 1 $tn`
-   do
+		for i in `seq 1 $tn`
+		do
 
-      echo -n "$cn"
-      [[ $cp == $i ]] && echo -n "$cr"
+			echo -n "$cn"
+			[[ $cp == $i ]] && echo -n "$cr"
 
-      eval "echo \$$i"
+			eval "echo \$$i"
 
-   done
+		done
 
-   read -sn 1 key
-   [[ "$key" == "$ec" ]] &&
-   {
-      read -sn 2 k2
-      key="$key$k2"
-   }
+		read -sn 1 key
+		[[ "$key" == "$ec" ]] &&
+			{
+				read -sn 2 k2
+				key="$key$k2"
+			}
 
-   case "$key" in
+			case "$key" in
 
-      "$au"|k)
-         cp=$(( cp - 1 ))
-         [[ $cp == 0 ]] && cp=$tn
-         ;;
+				"$au"|k)
+					cp=$(( cp - 1 ))
+					[[ $cp == 0 ]] && cp=$tn
+					;;
 
-      "$ad"|j)
-         cp=$(( cp + 1 ))
-         [[ $cp == $(( tn + 1 )) ]] && cp=1
-         ;;
+				"$ad"|j)
+					cp=$(( cp + 1 ))
+					[[ $cp == $(( tn + 1 )) ]] && cp=1
+					;;
 
-      "$nl")
-         si=true
-         end=true
-         ;;
+				"$nl")
+					si=true
+					end=true
+					;;
 
-      "q")
-         si=false
-         end=true
-         ;;
+				"q")
+					si=false
+					end=true
+					;;
 
-   esac
+			esac
 
-   tput cuu $tn
+			tput cuu $tn
 
-done
+		done
 
-tput cud $(( tn - 1 ))
-tput cnorm # unhide cursor
-echo "$cn" # normal colors
+		tput cud $(( tn - 1 ))
+		tput cnorm # unhide cursor
+		echo "$cn" # normal colors
 
-} >&2 # end capture
+	} >&2 # end capture
 
-$si && eval "echo \$$cp"
-
+	$si && eval "echo \$$cp"
+}
 # eof

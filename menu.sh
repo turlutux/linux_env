@@ -5,7 +5,7 @@
 # exit codes: 0 - normal, 1 - abort, 2 - no menu items, 3 - too many items
 # to select item, press enter; to abort press q
 
-function int_menu {
+function select_menu {
 [[ $# -lt 1 ]] && exit 2 # no menu items, at least 1 required
 
 [[ $# -gt $(( `tput lines` - 1 )) ]] && exit 3 # more items than rows

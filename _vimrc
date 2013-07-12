@@ -31,6 +31,7 @@ set bs=2 "alow the suppression of everything in insert mode
 set pastetoggle=<F3>
 set nu
 set ls=2  " Always shows the statusbar
+set mouse=nv
 
 set expandtab
 set printoptions=paper:A4
@@ -117,6 +118,7 @@ if has("autocmd")
   autocmd BufReadPost fugitive://* set bufhidden=delete
   autocmd BufRead,BufNewFile session*.log set filetype=logcat
   autocmd BufRead,BufNewFile */configs/* set filetype=configs
+  autocmd BufRead,BufNewFile *.aidl set filetype=java
 
 endif  " has("autocmd")
 

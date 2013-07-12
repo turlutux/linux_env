@@ -41,6 +41,10 @@ set printoptions=paper:A4
 let g:load_doxygen_syntax=1
 let g:pyflakes_use_quickfix = 0
 
+" SubSubSection: vim-projects {{{3
+" --------------------------------
+" /vim-projects/ }}}3
+
 " /Plugins/ }}}2
 
 " /Options/ }}}1
@@ -65,6 +69,16 @@ function! ToggleMouse()
 endfunction
 map <F12> :call ToggleMouse()
 
+function! ToggleList()
+  if &list
+    exe "set nolist"
+    echo "do not display list"
+  else
+    exe "set list"
+    echo "display list"
+  endif
+endfunction
+map <F11> :call ToggleList()
 
 " let mapleader = "ù"
 map <SPACE> 
@@ -123,6 +137,4 @@ set guifont=DejaVu\ Sans\ Mono\ 9
 set guioptions=""
 
 " /Visual/ }}}1
-
-
 

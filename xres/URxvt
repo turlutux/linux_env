@@ -79,4 +79,4 @@ URxvt.keysym.F11:            \033[23~
 URxvt.keysym.F12:            \033[24~
 
 URxvt*keysym.C-F7:           command:\033]710;-*-terminus-medium-*-*-*-*-120-*-*-*-*-iso8859-1\007
-URxvt*keysym.C-F8:           command:\033]710;-*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1\007
+URxvt*keysym.C-F8:           command:\033]710;xft:terminus:pixelsize=14\007
